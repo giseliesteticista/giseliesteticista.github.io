@@ -6,9 +6,15 @@ import { useRouter } from 'next/router';
 import moment from 'moment-timezone';
 import axios from 'axios';
 
+type AppData = {
+    nome: string;
+    telefone: string;
+    service: string;
+}
+
 export default function Agendamentos() {
     const [ hasApp, setHasApp ] = useState(false);
-    const [ appData, setAppData ] = useState([]);
+    const [ appData, setAppData ] = useState<AppData>([] as unknown as AppData);
     const [ date, setDate ] = useState([]);
 
     const [ telefone, setTelefone ] = useState<string>('');
