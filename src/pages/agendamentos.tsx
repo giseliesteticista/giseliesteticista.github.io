@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import moment from 'moment-timezone';
 import axios from 'axios';
+import Header from '@/components/Header';
 
 type AppData = {
     nome: string;
@@ -26,6 +27,8 @@ export default function Agendamentos() {
     const baseApi = 'https://esteticistagiseli.onrender.com';
 
     const [ appointmentsData, setAppointmentsData ] = useState([]);
+
+    const router = useRouter();
 
     useEffect(() => {
         if(window.localStorage.getItem('hasAppointment') == 'true') {
@@ -70,6 +73,7 @@ export default function Agendamentos() {
 
     return (
         <>
+        <Header />
         <div className={styles.content}>
             {
                 hasApp ? 
@@ -113,13 +117,23 @@ export default function Agendamentos() {
 
                     {
                         !loading ?
-                        <button 
-                        className={styles.submitButton} 
-                        type='submit'
-                        onClick={getApp}
-                        >
-                            CONSULTAR
-                        </button>
+                        <>
+                            <button 
+                            className={styles.submitButton} 
+                            type='submit'
+                            onClick={getApp}
+                            >
+                                CONSULTAR
+                            </button>
+                            <button 
+                            className={styles.submitButton} 
+                            type='submit'
+                            style={{ marginTop: 6 }}
+                            onClick={() => router.push('/')}
+                            >
+                                NOVO AGENDAMENTO
+                            </button>
+                        </>
                         :
                         <p>CARREGANDO...</p>
                     }

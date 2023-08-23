@@ -8,6 +8,7 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 
 import styles from '@/styles/Home.module.scss';
+import Header from '@/components/Header';
 
 moment.tz.setDefault('America/Sao_Paulo');
 
@@ -150,9 +151,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className={styles.header}>
-        <img src='/images/logo.svg' alt="Giseli Logo" className={styles.logo}/>
-      </header>
+      <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>AGENDAMENTOS</h1>
         <p className={styles.desc}>Faça seu agendamento de forma simples, rápida e em poucos passos.</p>

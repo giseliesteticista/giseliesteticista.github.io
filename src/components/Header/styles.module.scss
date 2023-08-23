@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 95px;
+
+    border-bottom: 1px solid lightgrey;
+
+    img {
+        cursor: pointer;
+    }
+}
