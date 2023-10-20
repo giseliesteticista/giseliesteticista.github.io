@@ -1,0 +1,61 @@
+API ROUTES:
+
+-----------------------------------------------
+
+/api/agendar - GET - Marcas os agendamentos
+
+request: {
+    name: String;
+    phone: String;
+    service: String;
+    appointment: Object {
+        date: Date,
+        hour: String;
+        ending: String;
+    }
+}
+
+response: {
+    success: Boolean,
+    data: {
+        id: String;
+        name: String;
+        phone: String;
+        service: String;
+        date: String,
+        hour: String,
+        ending: String,
+        createdAt: Date,
+        expireAt: Date,
+    }
+}
+
+-----------------------------------------------
+
+/api/delete/:id - DELETE - Excluir algum agendamento
+
+response: {
+    success: Boolean,
+    message: String
+}
+
+-----------------------------------------------
+
+/api/agendamentos - GET - Listar todos os agendamentos feitos
+
+response: {
+    success: Boolean,
+    data: Object {
+        id: String,
+        name: String,
+        phone: String,
+        service: String,
+        date: String,
+        hour: String,
+        ending: String,
+        createdAt: Date,
+        expireAt: Date,
+    }
+}
+
+-----------------------------------------------
