@@ -70,7 +70,7 @@ export default function Home() {
       });
 
       if(response.status == 200) {
-        if(moment(data).format('DD/MM/YYYY') == moment().format('DD/MM/YYYY')) {
+        if(moment(data).format('DD/MM/YYYY') == moment(new Date()).format('DD/MM/YYYY')) {
           setAvaiableHours(response.data.data.freeHours.filter((h) => h >= moment().format('HH:mm')));
         } else {
           setAvaiableHours(response.data.data.freeHours);
