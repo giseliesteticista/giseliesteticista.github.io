@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+tdimport { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -209,7 +209,7 @@ export default function Home() {
           <DatePicker
             selected={data}
             onChange={(date) => {
-              setData(new Date(date));
+              setData(date);
               getFreeAppointments(moment(date).format('YYYY-MM-DD'));
             }}
             filterDate={isWeekday}
