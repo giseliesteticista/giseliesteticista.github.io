@@ -209,8 +209,8 @@ export default function Home() {
           <DatePicker
             selected={data}
             onChange={(date) => {
-              setData(date);
-              getFreeAppointments(date);
+              setData(moment(date).format('YYYY-MM-DD'));
+              getFreeAppointments(moment(date).format('YYYY-MM-DD'));
             }}
             filterDate={isWeekday}
             placeholderText={data}
