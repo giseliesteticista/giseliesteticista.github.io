@@ -153,10 +153,14 @@ export default function Home() {
 
   useEffect(() => {
     var day = data.getDay();
-    if(day == 0) setData(moment(data).add(2, 'days').toDate());
-    if(day == 1) setData(moment(data).add(1, 'day').toDate());
-
-    getFreeAppointments(moment(data).format('YYYY-MM-DD'));
+    if(day == 0) {
+      setData(moment(data).add(2, 'days').toDate());
+      getFreeAppointments(moment(data).add(2, 'days').format('YYYY-MM-DD'));
+    }
+    if(day == 1) {
+      setData(moment(data).add(1, 'day').toDate());
+      getFreeAppointments(moment(data).add(1, 'day').format('YYYY-MM-DD'));
+    } 
   }, []);
 
   useEffect(() => {
