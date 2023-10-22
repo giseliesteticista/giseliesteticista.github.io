@@ -207,9 +207,9 @@ export default function Home() {
 
           <label htmlFor="data">Data e horário do agendamento:</label>
           <DatePicker
-            selected={moment(data).format('YYYY-MM-DD')}
+            selected={data}
             onChange={(date) => {
-              setData(new Date(moment(date).format('YYYY-MM-DD')));
+              setData(new Date(date));
               getFreeAppointments(moment(date).format('YYYY-MM-DD'));
             }}
             filterDate={isWeekday}
