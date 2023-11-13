@@ -8,6 +8,7 @@ import axios from 'axios';
 import Header from '@/components/Header';
 
 type AppData = {
+    id: string;
     nome: string;
     telefone: string;
     service: string;
@@ -27,6 +28,8 @@ export default function Agendamentos() {
     const baseApi = 'https://esteticistagiseli.onrender.com';
 
     const [ appointmentsData, setAppointmentsData ] = useState([]);
+
+    const [ excludeLoad, setExcludeLoad ] = useState(false);
 
     const router = useRouter();
 
@@ -53,7 +56,7 @@ export default function Agendamentos() {
                 if(response.status == 200 || response.status == 201) {
                     setLoaded(true);
 
-                    const finalResult = response.data.data.filter((el) => el.telefone.length > 9 && el.telefone.slice(2) == telefone || el.telefone == telefone);
+                    const finalResult = response.data.data.filter((el) => el.telefone.length > 9 && el.telefone.slice(2) == telefone && el.nome != 'Busy' && el.nome != 'Teste' || el.telefone == telefone && el.nome != 'Busy' && el.nome != 'Teste');
 
                     setAppointmentsData(finalResult);
                 } else {
@@ -68,6 +71,40 @@ export default function Agendamentos() {
             setLoading(false);
         } finally {
             setLoading(false);
+        }
+    }
+
+    const deleteAppointment = async(id: string) => {
+        try {
+
+            setExcludeLoad(true);
+
+            const response = await axios.delete(`${baseApi}/agendamentos/excluir/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                }
+            });
+
+            if(response.status == 200 || response.status == 201) {
+                alert(`${response.data.message}`);
+                setExcludeLoad(false);
+                if(JSON.parse(localStorage.getItem('appointment')).id == id) {
+                    localStorage.removeItem('hasAppointment');
+                    localStorage.removeItem('appointment');
+                }
+                router.reload();
+            } else {
+                alert('Não foi possível excluir o agendamento. Tente novamente ou recarregue a página!');
+                setExcludeLoad(false);
+            }
+
+        } catch(e) {
+            alert('Não foi possível excluir o agendamento. Tente novamente ou recarregue a página!');
+            setExcludeLoad(false);
+            console.log(e);
+        } finally {
+            setExcludeLoad(false);
         }
     }
 
@@ -87,6 +124,7 @@ export default function Agendamentos() {
                         <p>Serviço: <strong>{appData.service}</strong></p>
                         <p>Data: <strong>{date[0]}</strong></p>
                         <p>Horário: <strong>{date[1]}</strong></p>
+                        { excludeLoad ? <p>EXCLUINDO SEU AGENDAMENTO...</p> : <button onClick={() => deleteAppointment(appData.id)}>EXCLUIR AGENDAMENTO</button> }
                     </div>
                 </>
                 :
@@ -139,6 +177,7 @@ export default function Agendamentos() {
                 :
                 <div>
                     {
+                        appointmentsData.length >= 1 ? 
                         appointmentsData.map((appoint, index) => {
                             return (
                                 <div className={styles.appoints} key={index}>
@@ -147,9 +186,22 @@ export default function Agendamentos() {
                                     <p>Serviço: <strong>{appoint.service}</strong></p>
                                     <p>Data: <strong>{appoint.appointment.data}</strong></p>
                                     <p>Horário: <strong>{appoint.appointment.hora}</strong></p>
+                                    { excludeLoad ? <p>EXCLUINDO SEU AGENDAMENTO...</p> : <button onClick={() => deleteAppointment(appoint.id)}>EXCLUIR AGENDAMENTO</button> }
                                 </div>
                             )
                         })
+                        :
+                        <div className={styles.login}>
+                            <h3>Não encontramos nenhum agendamento com esse número de telefone.</h3>
+                            <button 
+                            className={styles.submitButton} 
+                            type='submit'
+                            style={{ marginTop: 6 }}
+                            onClick={() => router.push('/')}
+                            >
+                                NOVO AGENDAMENTO
+                            </button>
+                        </div>
                     }
                 </div>
             }
