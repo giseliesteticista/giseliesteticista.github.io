@@ -160,7 +160,10 @@ export default function Home() {
     if(day == 1) {
       setData(moment(data).add(1, 'day').toDate());
       getFreeAppointments(moment(data).add(1, 'day').format('YYYY-MM-DD'));
-    } 
+    }
+    if(day != 0 || day != 1) {
+      getFreeAppointments(moment(data).format('YYYY-MM-DD'));
+    }
   }, []);
 
   useEffect(() => {
