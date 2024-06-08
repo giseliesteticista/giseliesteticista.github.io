@@ -56,7 +56,7 @@ export default function Agendamentos() {
                 if(response.status == 200 || response.status == 201) {
                     setLoaded(true);
 
-                    const finalResult = response.data.data.filter((el) => el.telefone.length > 9 && el.telefone.slice(2) == telefone && el.nome != 'Busy' && el.nome != 'Teste' || el.telefone == telefone && el.nome != 'Busy' && el.nome != 'Teste');
+                    const finalResult = response.data.data.filter((el) => el.telefone.length > 9 && el.telefone.slice(2) == telefone && el.nome != 'Busy' && el.nome != 'Test' && el.nome != 'Teste' || el.telefone == telefone && el.nome != 'Busy' && el.nome != 'Test' && el.nome != 'Teste');
 
                     setAppointmentsData(finalResult);
                 } else {
