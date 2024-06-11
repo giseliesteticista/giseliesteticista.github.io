@@ -136,6 +136,10 @@ export default function Home() {
 
             setAppointSuccess(true);
             setModalIsOpen(true);
+          } else if(response.status == 400) {
+            alert('Já existe um agendamento nesse horário. Escolha outro horário, por favor.');
+          } else {
+            alert('Erro ao agendar. Recarregue a página e tente novamente!');
           }
         } else {
           console.log('PREENCHA OS CAMPOS ANTES');
